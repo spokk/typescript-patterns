@@ -1,40 +1,36 @@
-interface Bulka {
+interface HotDog {
 	sell(): number;
 }
 
-class HotDog implements Bulka {
+class PlainHotDog implements HotDog {
 	public sell(): number {
 		return 50;
 	}
 }
 
-class HotDogDecorator implements Bulka {
-	protected delegate: Bulka;
-
-	constructor(delegate: Bulka) {
-		this.delegate = delegate;
-	}
+class HotDogDecorator implements HotDog {
+	constructor(protected delegate: HotDog) {}
 
 	public sell(): number {
 		return this.delegate.sell();
 	}
 }
 
-class HotDogWithCatchup extends HotDogDecorator {
+class Catchup extends HotDogDecorator {
 	public sell(): number {
 		return super.sell() + 15;
 	}
 }
 
-class HotDogWithMayo extends HotDogDecorator {
+class Mayo extends HotDogDecorator {
 	public sell(): number {
 		return super.sell() + 7;
 	}
 }
 
-const myHotDogWithCatchup = new HotDogWithCatchup(new HotDog());
-const myHotDogWithMayo = new HotDogWithMayo(new HotDog());
-const myHotDogWithCatchupAndMayo = new HotDogWithCatchup(myHotDogWithMayo);
+const myHotDogWithCatchup = new Catchup(new PlainHotDog());
+const myHotDogWithMayo = new Mayo(new PlainHotDog());
+const myHotDogWithCatchupAndMayo = new Catchup(myHotDogWithMayo);
 
 console.log(myHotDogWithCatchup.sell()); // 50 + 15 = 65
 console.log(myHotDogWithMayo.sell()); // 50 + 7 = 57

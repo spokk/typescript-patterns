@@ -1,3 +1,5 @@
+// Virtual Proxy example
+
 interface Object {
 	do(): void;
 }
@@ -37,5 +39,6 @@ class MyProxy implements Object {
 }
 
 const expObjectUser = new ExpensiveObjectUser(new MyProxy());
+
 expObjectUser.do();
 expObjectUser.do();
